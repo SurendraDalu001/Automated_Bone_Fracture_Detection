@@ -1,0 +1,25 @@
+# Model files - allow the optimized BFD5.h5 (43.8 MB, within GitHub 100MB limit)
+*.pkl
+*.pb
+# Ignore other h5 files except the project model
+*.h5
+!BFD5.h5
+
+# Virtual environment
+venv/
+env/
+.env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Streamlit
+.streamlit/*
+!.streamlit/config.toml
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
