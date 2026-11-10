@@ -81,7 +81,7 @@ The app will open automatically in your browser at **http://localhost:8501**.
 
 ## 👨‍🏫 Project Supervision
 
-- **Supervisor:** Dr. C. Ranjeeth Kumar
+- **Supervisor:** Dr. J Krishnaiah
 
 ---
 
