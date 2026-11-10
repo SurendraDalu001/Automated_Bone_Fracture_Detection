@@ -11,7 +11,6 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_NAME = "BFD5.h5"
 MODEL_PATH = os.path.join(BASE_DIR, MODEL_NAME)
-SAMPLE_DIR = os.path.join(BASE_DIR, "sample_images")
 
 # ── Page config (must be first Streamlit call) ────────────────────────────────
 st.set_page_config(
@@ -150,12 +149,15 @@ with st.sidebar:
         "bone fractures from X-ray images."
     )
     st.markdown("---")
+    st.markdown("### 👨‍💻 Developed by")
+    st.markdown("**Dalu Surendra**")
+    st.markdown("---")
     st.markdown("### 👨‍🏫 Supervisor")
     st.markdown("**Dr. C. Ranjeeth Kumar**")
     st.markdown("---")
     st.markdown("### ℹ️ How to Use")
     st.markdown(
-        "1. Select a sample X-ray or upload your own (JPG / PNG)\n"
+        "1. Upload an X-ray image (JPG / PNG)\n"
         "2. Click **Predict**\n"
         "3. View the diagnosis result"
     )
@@ -188,71 +190,38 @@ col_left, col_right = st.columns([1, 1], gap="large")
 
 with col_left:
     st.markdown('<div class="upload-card">', unsafe_allow_html=True)
-    st.markdown("#### 📤 Input X-Ray Image")
+    st.markdown("#### 📤 Upload X-Ray Image")
 
-    input_mode = st.radio(
-        "Select input source:",
-        ["Choose from Samples", "Upload Image"],
-        horizontal=True,
+    uploaded_file = st.file_uploader(
+        "Supported formats: JPG, JPEG, PNG",
+        type=["jpg", "jpeg", "png"],
+        label_visibility="collapsed",
     )
 
     pil_image = None
     image_name = ""
     image_valid = False
 
-    if input_mode == "Choose from Samples":
-        sample_options = {
-            "🚨 Fractured Sample 1": "fractured_sample_1.png",
-            "🚨 Fractured Sample 2": "fractured_sample_2.png",
-            "✅ Normal Sample 1": "normal_sample_1.jpg",
-            "✅ Normal Sample 2": "normal_sample_2.jpg",
-        }
-        selected_label = st.selectbox("Pick a sample X-ray:", list(sample_options.keys()))
-        sample_filename = sample_options[selected_label]
-        sample_path = os.path.join(SAMPLE_DIR, sample_filename)
-
-        if os.path.exists(sample_path):
-            try:
-                pil_image = Image.open(sample_path)
-                image_name = sample_filename
-                image_valid = True
-                st.image(pil_image, caption=f"📁 Sample: {selected_label}", use_container_width=True)
-                st.markdown(
-                    f'<div class="metric-pill">📐 {pil_image.width} × {pil_image.height} px &nbsp;|&nbsp; Sample Image</div>',
-                    unsafe_allow_html=True,
-                )
-            except Exception as e:
-                st.error(f"❌ Failed to load sample image: {e}")
-        else:
-            st.warning("Sample images directory is empty or file not found.")
-
-    else:
-        uploaded_file = st.file_uploader(
-            "Supported formats: JPG, JPEG, PNG",
-            type=["jpg", "jpeg", "png"],
-            label_visibility="collapsed",
-        )
-
-        if uploaded_file:
-            try:
-                image_bytes = uploaded_file.read()
-                pil_image = Image.open(io.BytesIO(image_bytes))
-                image_name = uploaded_file.name
-                st.image(pil_image, caption=f"📁 {uploaded_file.name}", use_container_width=True)
-                st.markdown(
-                    f'<div class="metric-pill">📐 {pil_image.width} × {pil_image.height} px &nbsp;|&nbsp; {uploaded_file.type}</div>',
-                    unsafe_allow_html=True,
-                )
-                image_valid = True
-            except Exception:
-                st.error("❌ Could not read the file. Please upload a valid JPG or PNG image.")
-                image_valid = False
-        else:
+    if uploaded_file:
+        try:
+            image_bytes = uploaded_file.read()
+            pil_image = Image.open(io.BytesIO(image_bytes))
+            image_name = uploaded_file.name
+            st.image(pil_image, caption=f"📁 {uploaded_file.name}", use_container_width=True)
             st.markdown(
-                '<div class="info-box">👆 Upload an X-ray image to get started.</div>',
+                f'<div class="metric-pill">📐 {pil_image.width} × {pil_image.height} px &nbsp;|&nbsp; {uploaded_file.type}</div>',
                 unsafe_allow_html=True,
             )
+            image_valid = True
+        except Exception:
+            st.error("❌ Could not read the file. Please upload a valid JPG or PNG image.")
             image_valid = False
+    else:
+        st.markdown(
+            '<div class="info-box">👆 Upload an X-ray image to get started.</div>',
+            unsafe_allow_html=True,
+        )
+        image_valid = False
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -332,7 +301,7 @@ with col_right:
                     color:#a0aec0;">
             <div style="font-size:3.5rem;">🩻</div>
             <div style="font-size:1.1rem; margin-top:1rem;">
-                Select a sample or upload an image and click <strong>Predict</strong><br>to see the diagnosis here.
+                Upload an image and click <strong>Predict</strong><br>to see the diagnosis here.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -343,6 +312,6 @@ st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("""
 <div style="text-align:center; color:#a0aec0; font-size:0.85rem; padding:1rem 0;">
     Bone Fracture Detection System &nbsp;|&nbsp; MobileNetV2 Architecture &nbsp;|&nbsp;
-    Supervised by <strong>Dr. C. Ranjeeth Kumar</strong>
+    Developed by <strong>Dalu Surendra</strong> &nbsp;|&nbsp; Supervised by <strong>Dr. C. Ranjeeth Kumar</strong>
 </div>
 """, unsafe_allow_html=True)

@@ -56,14 +56,12 @@ The app will open automatically in your browser at **http://localhost:8501**.
 
 ## 🚀 Usage
 
-1. **Input Image:**
-   - Choose one of the built-in sample X-rays (Fractured or Normal) from the dropdown, **or**
-   - Upload your own X-ray image (JPG, JPEG, or PNG).
+1. **Upload an X-ray image** (supported formats: JPG, JPEG, or PNG).
 2. Click **🔍 Predict**.
 3. View the AI diagnosis:
    - **FRACTURED 🚨** (in red) with confidence percentage.
    - **NORMAL ✅** (in green) with confidence percentage.
-   - Detailed fracture probability bar.
+   - Detailed fracture risk probability bar.
 
 ---
 
