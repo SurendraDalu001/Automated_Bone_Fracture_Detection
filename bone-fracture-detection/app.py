@@ -152,9 +152,6 @@ with st.sidebar:
     st.markdown("### 👨‍💻 Developed by")
     st.markdown("**Dalu Surendra**")
     st.markdown("---")
-    st.markdown("### 👨‍🏫 Supervisor")
-    st.markdown("**Dr. C. Ranjeeth Kumar**")
-    st.markdown("---")
     st.markdown("### ℹ️ How to Use")
     st.markdown(
         "1. Upload an X-ray image (JPG / PNG)\n"
