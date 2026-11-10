@@ -11,11 +11,6 @@ bone-fracture-detection/
 ├── app.py               # Main Streamlit web application
 ├── BFD5.h5              # Pre-trained MobileNetV2 model (GitHub-ready, <100MB)
 ├── requirements.txt     # Python dependencies
-├── sample_images/       # Sample X-ray images for quick testing
-│   ├── fractured_sample_1.png
-│   ├── fractured_sample_2.png
-│   ├── normal_sample_1.jpg
-│   └── normal_sample_2.jpg
 └── README.md            # Project documentation
 ```
 
@@ -81,7 +76,7 @@ The app will open automatically in your browser at **http://localhost:8501**.
 
 ## 👨‍🏫 Project Supervision
 
-- **Supervisor:** Dr. C. Ranjeeth Kumar
+- **Supervisor:** Dr. J Krishnaiah
 
 ---
 
